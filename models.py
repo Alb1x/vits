@@ -454,10 +454,14 @@ class SynthesizerTrn(nn.Module):
       self.dp = DurationPredictor(hidden_channels, 256, 3, 0.5, gin_channels=gin_channels)
 
     if n_speakers > 1:
-      self.emb_g = nn.Embedding(n_speakers, gin_channels)
+      sid_map = torch.load("./speakers.pth")
+      def get_embeddings(sids):
+          sids_list = sids.tolist()   
+          return torch.cuda.FloatTensor(list(map(lambda sid: sid_map[sid], sids_list)))
+
+      self.emb_g = get_embeddings
 
   def forward(self, x, x_lengths, y, y_lengths, sid=None):
-
     x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths)
     if self.n_speakers > 0:
       g = self.emb_g(sid).unsqueeze(-1) # [b, h, 1]

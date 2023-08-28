@@ -1,5 +1,14 @@
 # VITS: Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech
 
+## Modification to use speaker embeddings instead of IDs
+
+The model was modified to make use of pre-computed 256-dim speaker embeddings.
+We use [simple-speaker-embedding](https://github.com/RF5/simple-speaker-embedding) to create a map that link speaker ids to their embedding, we save the map using torch.save in ./speaker.pth
+
+
+---
+---
+*Original Readme below:*
 ### Jaehyeon Kim, Jungil Kong, and Juhee Son
 
 In our recent [paper](https://arxiv.org/abs/2106.06103), we propose VITS: Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech.
